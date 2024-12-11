@@ -18,6 +18,7 @@ public class Product {
         this.reviewCount = reviewCount;
         this.score = calculateScore(totalScore);
     }
+
     private Float calculateScore(Float totalScore) {
         return totalScore / reviewCount;
     }

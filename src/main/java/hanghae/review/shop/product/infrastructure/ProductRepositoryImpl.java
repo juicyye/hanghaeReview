@@ -25,4 +25,9 @@ public class ProductRepositoryImpl implements ProductRepository {
     public void deleteById(Long id) {
         jpaRepository.deleteById(id);
     }
+
+    @Override
+    public void modifyProductReviewStats(Long productId, Long reviewCount, Float score) {
+        jpaRepository.updateProductScore(reviewCount, score, productId);
+    }
 }

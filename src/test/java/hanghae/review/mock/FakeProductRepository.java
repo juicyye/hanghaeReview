@@ -40,4 +40,12 @@ public class FakeProductRepository implements ProductRepository {
     public void deleteById(Long id) {
         data.removeIf(item -> Objects.equals(item.getId(), id));
     }
+
+    @Override
+    public void modifyProductReviewStats(Long productId, Long reviewCount, Float score) {
+        Product product = data.stream()
+                .filter(i -> Objects.equals(i.getId(), productId))
+                .findFirst().get();
+        product.updateReviewData(reviewCount, score);
+    }
 }
