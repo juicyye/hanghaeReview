@@ -27,7 +27,7 @@ public class ReviewRepositoryImpl implements ReviewRepository {
 
     @Override
     public boolean isReviewAlreadyWritten(Long userId, Long productId) {
-        Optional<ReviewEntity> _review = jpaRepository.findReviewByUser(productId, userId);
+        Optional<Long> _review = jpaRepository.findReviewByUser(productId, userId);
         return _review.isPresent();
     }
 

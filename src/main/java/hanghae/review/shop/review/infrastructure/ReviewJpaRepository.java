@@ -10,6 +10,6 @@ public interface ReviewJpaRepository extends JpaRepository<ReviewEntity, Long> {
     @Query("select re from ReviewEntity re join fetch re.productEntity pe where pe.id = :productId")
     List<ReviewEntity> findAllByProductId(@Param("productId") Long productId);
 
-    @Query("select re.id from ReviewEntity re join fetch re.productEntity pe where pe.id = :productId and re.userId = :userId")
-    Optional<ReviewEntity> findReviewByUser(@Param("productId") Long productId, @Param("userId") Long userId);
+    @Query("select re.id from ReviewEntity re join re.productEntity pe where pe.id = :productId and re.userId = :userId")
+    Optional<Long> findReviewByUser(@Param("productId") Long productId, @Param("userId") Long userId);
 }
