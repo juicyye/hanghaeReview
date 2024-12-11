@@ -22,10 +22,11 @@ public class ProductMetricsService {
 
     // todo 락 걸기, Facade, Redisson 사용하기
     @Transactional
-    public void updateReviewMetrics(ProductIncreaseEvent event) {
-        Product product = getProduct(event.productId());
-        ReviewUpdate totalReviewScore = getTotalReviewScore(event.productId());
-        product.updateReviewData(totalReviewScore.count() + 1, totalReviewScore.totalScore() + event.score());
+    public void updateReviewMetrics(Long productId, Float score) {
+        Product product = getProduct(productId);
+        ReviewUpdate totalReviewScore = getTotalReviewScore(productId);
+        // todo 여기에 +1과 score을 더하지 않고 내부에서 진행하든 다른 메서드로 뺴는 방법은 어떨까?
+        product.updateReviewData(totalReviewScore.count() + 1, totalReviewScore.totalScore() + score);
         productRepository.save(product);
     }
 

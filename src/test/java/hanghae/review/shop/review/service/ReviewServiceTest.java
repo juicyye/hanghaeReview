@@ -1,8 +1,11 @@
 package hanghae.review.shop.review.service;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
+import hanghae.review.global.exception.CustomApiException;
+import hanghae.review.global.util.ErrorMessage;
 import hanghae.review.mock.FakeProductRepository;
 import hanghae.review.mock.FakeReviewRepository;
 import hanghae.review.mock.FakeTimeRandomHolder;
@@ -69,24 +72,19 @@ class ReviewServiceTest {
         @DisplayName("유저가 상품에 리뷰를 쓰지 않았다면 리뷰를 쓸 수 있다")
         void canWriteReview() throws Exception {
             // when
-            boolean result = reviewService.isReviewWritten(userId, productId);
-
-
-            // then
-            assertThat(result).isFalse();
+            reviewService.isReviewWritten(userId, productId);
         }
 
         @Test
         @DisplayName("유저가 이미 상품에 리뷰를 썼다면 리뷰를 쓸 수 없다")
         void cantWriteReview() throws Exception {
             // given
-            reviewService.create(productId, new ReviewCreateReqDto(userId, 2.2f, "내용"),null);
-
-            // when
-            boolean result = reviewService.isReviewWritten(userId, productId);
+            reviewService.create(productId, new ReviewCreateReqDto(userId, 2.2f, "내용"), null);
 
             // then
-            assertThat(result).isTrue();
+            assertThatThrownBy(() -> reviewService.isReviewWritten(userId, productId))
+                    .isInstanceOf(CustomApiException.class)
+                    .hasMessage(ErrorMessage.DUPLICATE_REVIEW_WRITTEN.getMessage());
         }
     }
 
