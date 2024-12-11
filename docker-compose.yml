@@ -1,0 +1,11 @@
+services:
+  my-db:
+    container_name: review_db
+    image: mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: admin
+      TZ: Asia/Seoul
+    volumes:
+      - ./mysql:/var/lib/mysql
+    ports:
+      - 3308:3306
