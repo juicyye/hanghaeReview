@@ -21,7 +21,7 @@ public class ReviewService {
     private final ApplicationEventPublisher eventPublisher;
 
     @Transactional
-    public void create(Long productId, ReviewCreateReqDto createReqDto, List<MultipartFile> files) {
+    public void create(Long productId, ReviewCreateReqDto createReqDto, MultipartFile file) {
         Review review = reviewRequestMapper.create(productId, createReqDto);
         reviewRepository.save(review);
         eventPublisher.publishEvent(new ProductIncreaseEvent(productId, createReqDto.score()));
