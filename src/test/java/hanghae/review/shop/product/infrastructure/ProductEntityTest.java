@@ -13,7 +13,7 @@ class ProductEntityTest {
     @DisplayName("product 도메인으로 ProductEntity를 생성할 수 있다")
     void createProductEntity() throws Exception {
         // given
-        double score = 1.1;
+        float score = 1.1f;
         long count = 3L;
         Product product = createProduct(score, count);
 
@@ -27,7 +27,7 @@ class ProductEntityTest {
         });
     }
 
-    private Product createProduct(double score, long count){
+    private Product createProduct(float score, long count){
         return Product.builder()
                 .reviewCount(count)
                 .score(score)
