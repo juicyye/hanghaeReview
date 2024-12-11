@@ -16,16 +16,18 @@ class ProductMetricsServiceTest {
 
     private ProductMetricsService productMetricsService;
     private FakeProductRepository productRepository;
+    private FakeReviewRepository reviewRepository;
 
     @BeforeEach
     void setUp() {
         productRepository = new FakeProductRepository();
-        FakeReviewRepository reviewRepository = new FakeReviewRepository();
+        reviewRepository = new FakeReviewRepository();
         productMetricsService = new ProductMetricsService(productRepository, reviewRepository);
 
         Product product = createProduct(2.2f, 3L);
         productRepository.save(product);
         reviewRepository.save(createReview(product, 3.5f, 1L));
+        reviewRepository.save(createReview(product, 3.2f, 1L));
     }
 
     @Test
@@ -33,15 +35,14 @@ class ProductMetricsServiceTest {
     void updateReviewMetrics() throws Exception {
         // given
         Long productId = 1L;
-        Float score = 3.0f;
 
         // when
-        productMetricsService.updateReviewMetrics(productId, score);
+        productMetricsService.updateReviewMetrics(productId);
         Product result = productRepository.findById(productId).get();
 
         // then
         assertAll(() -> {
-            assertThat(result.getScore()).isEqualTo((score + 3.5f) / 2);
+            assertThat(result.getScore()).isEqualTo((3.2f + 3.5f) / 2);
             assertThat(result.getReviewCount()).isEqualTo(2);
         });
     }

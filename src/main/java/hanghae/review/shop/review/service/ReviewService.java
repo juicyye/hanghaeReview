@@ -4,11 +4,12 @@ import hanghae.review.global.exception.CustomApiException;
 import hanghae.review.global.util.ErrorMessage;
 import hanghae.review.shop.product.event.ProductIncreaseEvent;
 import hanghae.review.shop.review.controller.req.ReviewCreateReqDto;
+import hanghae.review.shop.review.controller.resp.ProductReviewRespDto;
 import hanghae.review.shop.review.domain.Review;
 import hanghae.review.shop.review.service.port.ReviewRepository;
-import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.ApplicationEventPublisher;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
@@ -32,7 +33,12 @@ public class ReviewService {
     // todo Controller에서 호출할 지 아니면 create 서비스를 호출할 때 확인할지?
     public void isReviewWritten(Long userId, Long productId) {
         boolean result = reviewRepository.isReviewAlreadyWritten(userId, productId);
-        if(result) throw new CustomApiException(ErrorMessage.DUPLICATE_REVIEW_WRITTEN.getMessage());
+        if (result) {
+            throw new CustomApiException(ErrorMessage.DUPLICATE_REVIEW_WRITTEN.getMessage());
+        }
     }
 
+    public ProductReviewRespDto fetchProductReviews(Long productId, int cursor, int size) {
+        return  reviewRepository.findProductReview(productId, PageRequest.of(cursor, size));
+    }
 }

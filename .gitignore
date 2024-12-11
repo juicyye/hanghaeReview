@@ -42,3 +42,5 @@ applica*.properties
 /db/
 /conf/
 /log/
+
+*docker*

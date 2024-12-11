@@ -116,7 +116,7 @@ class ReviewControllerTest extends IntegrationTestSupport {
         }
 
         @Test
-        @DisplayName("내용이 2~15자 이내가 아니라면 에러를 반환한다")
+        @DisplayName("내용이 2~50자 이내가 아니라면 에러를 반환한다")
         void NotRangeContent() throws Exception {
             // given
             ReviewCreateReqDto request = new ReviewCreateReqDto(1L, 5.1f, "내");
@@ -132,7 +132,7 @@ class ReviewControllerTest extends IntegrationTestSupport {
             resultActions.andExpect(MockMvcResultMatchers.status().isBadRequest())
                     .andExpect(MockMvcResultMatchers.jsonPath("$.code").value(-1))
                     .andExpect(MockMvcResultMatchers.jsonPath("$.message").value(ReviewConst.VALIDATE_FAIL))
-                    .andExpect(MockMvcResultMatchers.jsonPath("$.data.content").value("내용은 2~15자로 입력해주세요"));
+                    .andExpect(MockMvcResultMatchers.jsonPath("$.data.content").value("내용은 2~50자로 입력해주세요"));
         }
     }
 

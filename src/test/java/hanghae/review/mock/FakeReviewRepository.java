@@ -1,5 +1,6 @@
 package hanghae.review.mock;
 
+import hanghae.review.shop.review.controller.resp.ProductReviewRespDto;
 import hanghae.review.shop.review.domain.Review;
 import hanghae.review.shop.review.service.port.ReviewRepository;
 import java.util.ArrayList;
@@ -7,6 +8,7 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.concurrent.atomic.AtomicLong;
+import org.springframework.data.domain.Pageable;
 
 public class FakeReviewRepository implements ReviewRepository {
     private List<Review> data = new ArrayList<>();
@@ -49,5 +51,10 @@ public class FakeReviewRepository implements ReviewRepository {
         return data.stream()
                 .filter(i -> Objects.equals(i.getId(),id))
                 .findFirst();
+    }
+
+    @Override
+    public ProductReviewRespDto findProductReview(Long productId, Pageable pageable) {
+        return null;
     }
 }

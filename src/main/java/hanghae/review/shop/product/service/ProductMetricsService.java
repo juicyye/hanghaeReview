@@ -21,12 +21,12 @@ public class ProductMetricsService {
     private final ReviewRepository reviewRepository;
 
     // todo 락 걸기, Facade, Redisson 사용하기
+    // todo review가 저장되고 나서 실행하기
     @Transactional
-    public void updateReviewMetrics(Long productId, Float score) {
+    public void updateReviewMetrics(Long productId) {
         Product product = getProduct(productId);
         ReviewUpdate totalReviewScore = getTotalReviewScore(productId);
-        // todo 여기에 +1과 score을 더하지 않고 내부에서 진행하든 다른 메서드로 뺴는 방법은 어떨까?
-        product.updateReviewData(totalReviewScore.count() + 1, totalReviewScore.totalScore() + score);
+        product.updateReviewData(totalReviewScore.count(), totalReviewScore.totalScore());
         productRepository.save(product);
     }
 
