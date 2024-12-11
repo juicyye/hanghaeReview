@@ -19,6 +19,7 @@ public class ReviewEntity {
     private Long userId;
     private String title;
     private String content;
+    private Float score;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
 

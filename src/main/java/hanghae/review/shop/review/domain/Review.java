@@ -15,7 +15,9 @@ public class Review {
     private Long id;
     private Long userId;
     private String content;
+    private Product product;
+    private Float score;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
-    private Product product;
+
 }

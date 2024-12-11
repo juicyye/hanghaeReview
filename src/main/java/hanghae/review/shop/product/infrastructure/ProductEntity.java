@@ -22,7 +22,7 @@ public class ProductEntity {
     @Column(nullable = false)
     private Long reviewCount;
     @Column(nullable = false)
-    private Double score;
+    private Float score;
 
     public static ProductEntity fromModel(Product product) {
         ProductEntity productEntity = new ProductEntity();

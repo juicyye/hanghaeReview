@@ -12,6 +12,6 @@ import lombok.NoArgsConstructor;
 public class Product {
     private Long id;
     private Long reviewCount;
-    private Double score;
+    private Float score;
 
 }

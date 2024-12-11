@@ -10,7 +10,7 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class ReviewRequestMapper {
 
-    private ProductService productService;
+    private final ProductService productService;
     private final TimeRandomHolder timeRandomHolder;
 
     public Review create(Long productId, ReviewCreateReqDto createReqDto) {
@@ -18,6 +18,7 @@ public class ReviewRequestMapper {
         return Review.builder()
                 .content(createReqDto.content())
                 .userId(createReqDto.userId())
+                .score(createReqDto.score())
                 .product(product)
                 .createdAt(timeRandomHolder.getCurrentTime())
                 .updatedAt(timeRandomHolder.getCurrentTime())
