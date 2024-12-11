@@ -5,8 +5,9 @@ import hanghae.review.global.util.ErrorMessage;
 import hanghae.review.shop.product.domain.Product;
 import hanghae.review.shop.product.event.ProductIncreaseEvent;
 import hanghae.review.shop.product.service.port.ProductRepository;
-import hanghae.review.shop.review.domain.ReviewUpdate;
-import hanghae.review.shop.review.service.ReviewService;
+import hanghae.review.shop.review.domain.Review;
+import hanghae.review.shop.review.service.port.ReviewRepository;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -17,13 +18,13 @@ import org.springframework.transaction.annotation.Transactional;
 public class ProductMetricsService {
 
     private final ProductRepository productRepository;
-    private final ReviewService reviewService;
+    private final ReviewRepository reviewRepository;
 
     // todo 락 걸기, Facade, Redisson 사용하기
     @Transactional
     public void updateReviewMetrics(ProductIncreaseEvent event) {
         Product product = getProduct(event.productId());
-        ReviewUpdate totalReviewScore = reviewService.getTotalReviewScore(event.productId());
+        ReviewUpdate totalReviewScore = getTotalReviewScore(event.productId());
         product.updateReviewData(totalReviewScore.count() + 1, totalReviewScore.totalScore() + event.score());
         productRepository.save(product);
     }
@@ -32,5 +33,18 @@ public class ProductMetricsService {
         return productRepository.findById(productId).orElseThrow(
                 () -> new CustomApiException(ErrorMessage.NOT_FOUND_PRODUCT.getMessage())
         );
+    }
+
+
+    private ReviewUpdate getTotalReviewScore(Long productId) {
+        List<Review> reviews = reviewRepository.findAllByProduct(productId);
+        long count = reviews.size();
+        float totalScore = (float) reviews.stream()
+                .mapToDouble(Review::getScore)
+                .sum();
+        return new ReviewUpdate(count, totalScore);
+    }
+
+    record ReviewUpdate(long count, float totalScore) {
     }
 }

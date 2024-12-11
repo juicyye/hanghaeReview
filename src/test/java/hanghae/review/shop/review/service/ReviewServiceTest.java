@@ -11,7 +11,6 @@ import hanghae.review.shop.product.event.ProductIncreaseEvent;
 import hanghae.review.shop.product.service.ProductService;
 import hanghae.review.shop.review.controller.req.ReviewCreateReqDto;
 import hanghae.review.shop.review.domain.Review;
-import hanghae.review.shop.review.domain.ReviewUpdate;
 import java.time.LocalDateTime;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -90,27 +89,6 @@ class ReviewServiceTest {
             assertThat(result).isTrue();
         }
     }
-
-    @Test
-    @DisplayName("리뷰의 총 리뷰수와 총 점수를 알 수 있다")
-    void getTotalReviewScore() throws Exception {
-        // given
-        Long productId = 0L;
-        float score1 = 2.2f;
-        float score2 = 2.4f;
-        reviewService.create(productId, new ReviewCreateReqDto(0L, score1, "내용"));
-        reviewService.create(productId, new ReviewCreateReqDto(1L, score2, "내용"));
-
-        // when
-        ReviewUpdate result = reviewService.getTotalReviewScore(productId);
-
-        // then
-        assertAll(() -> {
-            assertThat(result.totalScore()).isEqualTo(score1 + score2);
-            assertThat(result.count()).isEqualTo(2L);
-        });
-    }
-
 
     private Product createProduct(float score, long reviewCount) {
         return Product.builder()
