@@ -3,6 +3,7 @@ package hanghae.review.shop.review.infrastructure;
 import hanghae.review.shop.review.domain.Review;
 import hanghae.review.shop.review.service.port.ReviewRepository;
 import java.util.List;
+import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
@@ -25,5 +26,10 @@ public class ReviewRepositoryImpl implements ReviewRepository {
     @Override
     public boolean isReviewAlreadyWritten(Long userId, Long productId) {
         return false;
+    }
+
+    @Override
+    public Optional<Review> findById(Long id) {
+        return Optional.empty();
     }
 }

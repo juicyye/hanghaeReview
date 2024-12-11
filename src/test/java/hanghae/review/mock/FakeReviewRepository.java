@@ -5,6 +5,7 @@ import hanghae.review.shop.review.service.port.ReviewRepository;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 import java.util.concurrent.atomic.AtomicLong;
 
 public class FakeReviewRepository implements ReviewRepository {
@@ -41,5 +42,12 @@ public class FakeReviewRepository implements ReviewRepository {
         return data.stream()
                 .filter(i -> i.getProduct().getId().equals(productId))
                 .anyMatch(i -> i.getUserId().equals(userId));
+    }
+
+    @Override
+    public Optional<Review> findById(Long id) {
+        return data.stream()
+                .filter(i -> Objects.equals(i.getId(),id))
+                .findFirst();
     }
 }

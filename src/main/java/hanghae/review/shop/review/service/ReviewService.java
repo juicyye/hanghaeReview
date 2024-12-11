@@ -1,6 +1,5 @@
 package hanghae.review.shop.review.service;
 
-import hanghae.review.shop.product.domain.Product;
 import hanghae.review.shop.product.event.ProductIncreaseEvent;
 import hanghae.review.shop.review.controller.req.ReviewCreateReqDto;
 import hanghae.review.shop.review.domain.Review;
@@ -28,7 +27,7 @@ public class ReviewService {
         eventPublisher.publishEvent(new ProductIncreaseEvent(productId, createReqDto.score()));
     }
 
-    public boolean canWriteReview(Long userId, Long productId) {
+    public boolean isReviewWritten(Long userId, Long productId) {
         return reviewRepository.isReviewAlreadyWritten(userId, productId);
     }
 
