@@ -48,7 +48,7 @@ class ReviewServiceTest {
         ReviewCreateReqDto request = new ReviewCreateReqDto(1L, 2.2f, "하이요");
 
         // when
-        reviewService.create(productId, request);
+        reviewService.create(productId, request, null);
         Review review = reviewRepository.findById(0L).get();
 
         // then
@@ -80,7 +80,7 @@ class ReviewServiceTest {
         @DisplayName("유저가 이미 상품에 리뷰를 썼다면 리뷰를 쓸 수 없다")
         void cantWriteReview() throws Exception {
             // given
-            reviewService.create(productId, new ReviewCreateReqDto(userId, 2.2f, "내용"));
+            reviewService.create(productId, new ReviewCreateReqDto(userId, 2.2f, "내용"),null);
 
             // when
             boolean result = reviewService.isReviewWritten(userId, productId);

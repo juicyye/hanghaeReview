@@ -35,7 +35,6 @@ public class ProductMetricsService {
         );
     }
 
-
     private ReviewUpdate getTotalReviewScore(Long productId) {
         List<Review> reviews = reviewRepository.findAllByProduct(productId);
         long count = reviews.size();
