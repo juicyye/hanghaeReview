@@ -1,11 +1,13 @@
 services:
   my-db:
     container_name: review_db
-    image: mysql
+    image: mariadb
     environment:
-      MYSQL_ROOT_PASSWORD: admin
+      MARIADB_ROOT_PASSWORD: admin
       TZ: Asia/Seoul
     volumes:
-      - ./mysql:/var/lib/mysql
+      - ./db:/var/lib/mysql
+      - ./conf:/etc/mysql/conf.d:ro
+      - ./log:/var/log/maria
     ports:
-      - 3308:3306
+      - 3307:3306

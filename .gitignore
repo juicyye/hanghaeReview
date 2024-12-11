@@ -39,4 +39,6 @@ out/
 applica*.yml
 applica*.properties
 
-/mysql/
+/db/
+/conf/
+/log/
