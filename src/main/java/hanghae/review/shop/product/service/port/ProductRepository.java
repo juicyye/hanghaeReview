@@ -8,4 +8,5 @@ public interface ProductRepository {
     void save(Product product);
     Optional<Product> findById(Long id);
     void deleteById(Long id);
+    void update(Product product);
 }

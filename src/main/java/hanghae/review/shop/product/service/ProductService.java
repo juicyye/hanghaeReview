@@ -4,7 +4,6 @@ import hanghae.review.global.exception.CustomApiException;
 import hanghae.review.global.util.ErrorMessage;
 import hanghae.review.shop.product.domain.Product;
 import hanghae.review.shop.product.service.port.ProductRepository;
-import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -25,4 +24,5 @@ public class ProductService {
         return productRepository.findById(id)
                 .orElseThrow(() -> new CustomApiException(ErrorMessage.NOT_FOUND_PRODUCT.getMessage()));
     }
+
 }

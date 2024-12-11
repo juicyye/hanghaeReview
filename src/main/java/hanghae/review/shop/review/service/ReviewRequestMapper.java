@@ -6,8 +6,10 @@ import hanghae.review.shop.product.service.ProductService;
 import hanghae.review.shop.review.controller.req.ReviewCreateReqDto;
 import hanghae.review.shop.review.domain.Review;
 import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Component;
 
 @RequiredArgsConstructor
+@Component
 public class ReviewRequestMapper {
 
     private final ProductService productService;

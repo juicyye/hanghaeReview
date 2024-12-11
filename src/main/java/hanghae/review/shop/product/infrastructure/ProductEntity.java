@@ -26,6 +26,7 @@ public class ProductEntity {
 
     public static ProductEntity fromModel(Product product) {
         ProductEntity productEntity = new ProductEntity();
+        productEntity.id = product.getId();
         productEntity.reviewCount = product.getReviewCount();
         productEntity.score = product.getScore();
         return productEntity;
