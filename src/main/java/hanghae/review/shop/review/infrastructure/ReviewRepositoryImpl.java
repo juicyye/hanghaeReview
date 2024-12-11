@@ -15,21 +15,25 @@ public class ReviewRepositoryImpl implements ReviewRepository {
 
     @Override
     public void save(Review review) {
-
+        jpaRepository.save(ReviewEntity.fromModel(review));
     }
 
     @Override
     public List<Review> findAllByProduct(Long productId) {
-        return List.of();
+        return jpaRepository.findAllByProductId(productId)
+                .stream().map(ReviewEntity::toModel)
+                .toList();
     }
 
     @Override
     public boolean isReviewAlreadyWritten(Long userId, Long productId) {
-        return false;
+        Optional<ReviewEntity> _review = jpaRepository.findReviewByUser(productId, userId);
+        return _review.isPresent();
     }
 
     @Override
     public Optional<Review> findById(Long id) {
-        return Optional.empty();
+        return jpaRepository.findById(id)
+                .map(ReviewEntity::toModel);
     }
 }
