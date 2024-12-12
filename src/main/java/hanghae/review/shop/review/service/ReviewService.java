@@ -41,7 +41,7 @@ public class ReviewService {
         }
     }
 
-    public ProductReviewRespDto fetchProductReviews(Long productId, int cursor, int size) {
-        return  reviewRepository.findProductReview(productId, PageRequest.of(cursor, size));
+    public ProductReviewRespDto fetchProductReviews(Long productId, Long cursor, int size) {
+        return  reviewRepository.findProductReview(productId, cursor, size);
     }
 }

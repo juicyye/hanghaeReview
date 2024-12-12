@@ -41,7 +41,7 @@ public class ReviewRepositoryImpl implements ReviewRepository {
     }
 
     @Override
-    public ProductReviewRespDto findProductReview(Long productId, Pageable pageable) {
-        return reviewDslRepository.findAllProductReviews(productId, pageable);
+    public ProductReviewRespDto findProductReview(Long productId, Long cursor, int size) {
+        return reviewDslRepository.findAllProductReviews(productId, cursor, size);
     }
 }

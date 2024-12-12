@@ -10,7 +10,6 @@ import hanghae.review.shop.review.controller.resp.ProductReviewRespDto;
 import hanghae.review.shop.review.controller.resp.ReviewRespDto;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Repository;
 
 @RequiredArgsConstructor
@@ -19,24 +18,24 @@ public class ReviewDslRepositoryImpl {
 
     private final JPAQueryFactory queryFactory;
 
-    public ProductReviewRespDto findAllProductReviews(Long productId, Pageable pageable) {
-        List<ReviewRespDto> reviewRespDtos = getProductReviews(productId, pageable);
+    public ProductReviewRespDto findAllProductReviews(Long productId, Long cursor, int size) {
+        List<ReviewRespDto> reviewRespDtos = getProductReviews(productId, cursor, size);
         setReviewImage(reviewRespDtos);
 
         ProductReviewRespDto reviewDto = getReviews(productId);
-        reviewDto.setReviewInfo(pageable.getPageNumber(), reviewRespDtos);
+        reviewDto.setReviewInfo(cursor, reviewRespDtos);
         return reviewDto;
     }
 
-    private List<ReviewRespDto> getProductReviews(Long productId, Pageable pageable) {
+    private List<ReviewRespDto> getProductReviews(Long productId, Long cursor, int size) {
         return queryFactory.select(
                         Projections.fields(ReviewRespDto.class, reviewEntity.id, reviewEntity.content, reviewEntity.score,
                                 reviewEntity.userId, reviewEntity.content, reviewEntity.createdAt))
                 .from(reviewEntity)
                 .join(reviewEntity.productEntity, productEntity)
                 .where(productEntity.id.eq(productId))
-                .offset(pageable.getOffset())
-                .limit(pageable.getPageSize())
+                .where(cursor == 0L ? null : reviewEntity.id.gt(cursor))
+                .limit(size)
                 .orderBy(reviewEntity.createdAt.desc())
                 .fetch();
     }

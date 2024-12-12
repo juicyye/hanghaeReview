@@ -8,14 +8,14 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.concurrent.atomic.AtomicLong;
-import org.springframework.data.domain.Pageable;
 
 public class FakeReviewRepository implements ReviewRepository {
     private List<Review> data = new ArrayList<>();
     private AtomicLong counter = new AtomicLong();
+
     @Override
     public void save(Review review) {
-        if(review.getId() == null || review.getId() == 0) {
+        if (review.getId() == null || review.getId() == 0) {
             Review newReview = Review.builder()
                     .id(counter.getAndIncrement())
                     .userId(review.getUserId())
@@ -26,7 +26,7 @@ public class FakeReviewRepository implements ReviewRepository {
                     .updatedAt(review.getUpdatedAt())
                     .build();
             data.add(newReview);
-        } else{
+        } else {
             data.removeIf(item -> Objects.equals(item.getId(), review.getId()));
             data.add(review);
         }
@@ -49,12 +49,12 @@ public class FakeReviewRepository implements ReviewRepository {
     @Override
     public Optional<Review> findById(Long id) {
         return data.stream()
-                .filter(i -> Objects.equals(i.getId(),id))
+                .filter(i -> Objects.equals(i.getId(), id))
                 .findFirst();
     }
 
     @Override
-    public ProductReviewRespDto findProductReview(Long productId, Pageable pageable) {
+    public ProductReviewRespDto findProductReview(Long productId, Long cursor, int size) {
         return null;
     }
 }
