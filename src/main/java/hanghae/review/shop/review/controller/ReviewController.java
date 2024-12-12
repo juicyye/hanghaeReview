@@ -28,7 +28,6 @@ public class ReviewController {
     public ResponseEntity<?> registerReview(@PathVariable("productId") Long productId,
                                             @Valid @RequestBody ReviewCreateReqDto createReqDto,
                                             @RequestPart(value = "file", required = false) MultipartFile file) {
-        reviewService.isReviewWritten(createReqDto.userId(), productId);
         reviewService.create(productId, createReqDto, file);
         return ResponseEntity.ok().build();
     }

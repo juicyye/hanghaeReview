@@ -26,6 +26,7 @@ public class ReviewService {
 
     @Transactional
     public void create(Long productId, ReviewCreateReqDto createReqDto, MultipartFile file) {
+        isReviewWritten(createReqDto.userId(), productId);
         Review review = reviewRequestMapper.create(productId, createReqDto);
         reviewRepository.save(review);
 
@@ -33,8 +34,7 @@ public class ReviewService {
         eventPublisher.publishEvent(new ReviewImageFileEvent(file, review));
     }
 
-    // todo Controller에서 호출할 지 아니면 create 서비스를 호출할 때 확인할지?
-    public void isReviewWritten(Long userId, Long productId) {
+    private void isReviewWritten(Long userId, Long productId) {
         boolean result = reviewRepository.isReviewAlreadyWritten(userId, productId);
         if (result) {
             throw new CustomApiException(ErrorMessage.DUPLICATE_REVIEW_WRITTEN.getMessage());

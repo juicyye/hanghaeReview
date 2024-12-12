@@ -70,11 +70,18 @@ class ReviewServiceTest {
     class OneUserOneReview{
         Long productId = 0L;
         Long userId = 0L;
+
         @Test
         @DisplayName("유저가 상품에 리뷰를 쓰지 않았다면 리뷰를 쓸 수 있다")
         void canWriteReview() throws Exception {
+            // given
+            reviewService.create(productId, new ReviewCreateReqDto(userId, 2.2f, "내용"), null);
+
             // when
-            reviewService.isReviewWritten(userId, productId);
+            Review review = reviewRepository.findById(0L).get();
+
+            // then
+            assertThat(review.getScore()).isEqualTo(2.2f);
         }
 
         @Test
@@ -84,7 +91,7 @@ class ReviewServiceTest {
             reviewService.create(productId, new ReviewCreateReqDto(userId, 2.2f, "내용"), null);
 
             // then
-            assertThatThrownBy(() -> reviewService.isReviewWritten(userId, productId))
+            assertThatThrownBy(() -> reviewService.create(productId, new ReviewCreateReqDto(userId, 2.2f, "내용"), null))
                     .isInstanceOf(CustomApiException.class)
                     .hasMessage(ErrorMessage.DUPLICATE_REVIEW_WRITTEN.getMessage());
         }
