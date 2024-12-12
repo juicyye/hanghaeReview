@@ -9,6 +9,7 @@ import hanghae.review.global.util.ErrorMessage;
 import hanghae.review.mock.FakeProductRepository;
 import hanghae.review.mock.FakeReviewRepository;
 import hanghae.review.mock.FakeTimeRandomHolder;
+import hanghae.review.shop.imagefile.event.ReviewImageFileEvent;
 import hanghae.review.shop.product.domain.Product;
 import hanghae.review.shop.product.event.ProductIncreaseEvent;
 import hanghae.review.shop.product.service.ProductService;
@@ -60,6 +61,7 @@ class ReviewServiceTest {
             assertThat(review.getContent()).isEqualTo("하이요");
             assertThat(review.getCreatedAt()).isEqualTo(localDateTime);
             Mockito.verify(eventPublisher).publishEvent(Mockito.any(ProductIncreaseEvent.class));
+            Mockito.verify(eventPublisher).publishEvent(Mockito.any(ReviewImageFileEvent.class));
         });
     }
 

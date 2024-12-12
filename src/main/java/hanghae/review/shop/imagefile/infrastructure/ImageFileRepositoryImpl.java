@@ -2,6 +2,7 @@ package hanghae.review.shop.imagefile.infrastructure;
 
 import hanghae.review.shop.imagefile.domain.ImageFile;
 import hanghae.review.shop.imagefile.service.port.ImageFileRepository;
+import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
@@ -14,5 +15,10 @@ public class ImageFileRepositoryImpl implements ImageFileRepository {
     @Override
     public void save(ImageFile imageFile) {
         jpaRepository.save(ImageFileEntity.fromEntity(imageFile));
+    }
+
+    @Override
+    public Optional<ImageFile> findById(Long id) {
+        return jpaRepository.findById(id).map(ImageFileEntity::toEntity);
     }
 }

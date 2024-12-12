@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -26,7 +27,8 @@ public class ReviewController {
     @PostMapping("/{productId}/reviews")
     public ResponseEntity<?> registerReview(@PathVariable("productId") Long productId,
                                             @Valid @RequestBody ReviewCreateReqDto createReqDto,
-                                            MultipartFile file) {
+                                            @RequestPart(value = "file", required = false) MultipartFile file) {
+        reviewService.isReviewWritten(createReqDto.userId(), productId);
         reviewService.create(productId, createReqDto, file);
         return ResponseEntity.ok().build();
     }

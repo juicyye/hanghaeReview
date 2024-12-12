@@ -32,7 +32,6 @@ public class ImageFileService {
     }
 
     private String generateStoreFileName(String originalFilename) {
-        String randomFileName = uuidRandomHolder.getRandom();
         int pos = originalFilename.lastIndexOf(IMAGE_FILE_DELIMITER);
         String extension = originalFilename.substring(pos + 1);
 
@@ -40,6 +39,8 @@ public class ImageFileService {
             throw new CustomApiException(ErrorMessage.INVALID_IMAGE_FORMAT.getMessage());
         }
 
+        // todo .webp 파일로 바꾸기
+        String randomFileName = uuidRandomHolder.getRandom();
         return randomFileName + IMAGE_FILE_DELIMITER + extension;
     }
 }
