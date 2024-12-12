@@ -2,6 +2,7 @@ package hanghae.review.shop.review.service;
 
 import hanghae.review.global.exception.CustomApiException;
 import hanghae.review.global.util.ErrorMessage;
+import hanghae.review.shop.imagefile.event.ReviewImageFileEvent;
 import hanghae.review.shop.product.event.ProductIncreaseEvent;
 import hanghae.review.shop.review.controller.req.ReviewCreateReqDto;
 import hanghae.review.shop.review.controller.resp.ProductReviewRespDto;
@@ -27,7 +28,9 @@ public class ReviewService {
     public void create(Long productId, ReviewCreateReqDto createReqDto, MultipartFile file) {
         Review review = reviewRequestMapper.create(productId, createReqDto);
         reviewRepository.save(review);
+
         eventPublisher.publishEvent(new ProductIncreaseEvent(productId, createReqDto.score()));
+        eventPublisher.publishEvent(new ReviewImageFileEvent(file, review));
     }
 
     // todo Controller에서 호출할 지 아니면 create 서비스를 호출할 때 확인할지?
