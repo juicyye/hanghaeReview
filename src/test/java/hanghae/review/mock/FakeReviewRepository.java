@@ -57,4 +57,14 @@ public class FakeReviewRepository implements ReviewRepository {
     public ProductReviewRespDto findProductReview(Long productId, Long cursor, int size) {
         return null;
     }
+
+    @Override
+    public List<Review> findAllByPessimistic(Long productId) {
+        return List.of();
+    }
+
+    @Override
+    public List<Review> findAllByOptimistic(Long productId) {
+        return List.of();
+    }
 }

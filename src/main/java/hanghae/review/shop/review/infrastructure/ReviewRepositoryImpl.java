@@ -6,7 +6,6 @@ import hanghae.review.shop.review.service.port.ReviewRepository;
 import java.util.List;
 import java.util.Optional;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Repository;
 
 @RequiredArgsConstructor
@@ -24,6 +23,20 @@ public class ReviewRepositoryImpl implements ReviewRepository {
     @Override
     public List<Review> findAllByProduct(Long productId) {
         return jpaRepository.findAllByProductId(productId)
+                .stream().map(ReviewEntity::toModel)
+                .toList();
+    }
+
+    @Override
+    public List<Review> findAllByPessimistic(Long productId) {
+        return jpaRepository.findAllByPessimistic(productId)
+                .stream().map(ReviewEntity::toModel)
+                .toList();
+    }
+
+    @Override
+    public List<Review> findAllByOptimistic(Long productId) {
+        return jpaRepository.findAllByOptimistic(productId)
                 .stream().map(ReviewEntity::toModel)
                 .toList();
     }

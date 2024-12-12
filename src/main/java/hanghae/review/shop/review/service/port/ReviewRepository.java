@@ -15,4 +15,8 @@ public interface ReviewRepository {
     Optional<Review> findById(Long id);
 
     ProductReviewRespDto findProductReview(Long productId, Long cursor, int size);
+
+    List<Review> findAllByPessimistic(Long productId);
+
+    List<Review> findAllByOptimistic(Long productId);
 }
