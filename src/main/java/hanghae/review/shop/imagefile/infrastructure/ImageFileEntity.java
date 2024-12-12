@@ -12,7 +12,6 @@ import jakarta.persistence.OneToOne;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.NoArgsConstructor;
-import org.checkerframework.common.value.qual.ArrayLen;
 
 @Entity
 @NoArgsConstructor
@@ -38,7 +37,7 @@ public class ImageFileEntity {
         return imageFileEntity;
     }
 
-    public ImageFile toEntity(){
+    public ImageFile toEntity() {
         return ImageFile.builder()
                 .id(id)
                 .storeFileName(storeFileName)
