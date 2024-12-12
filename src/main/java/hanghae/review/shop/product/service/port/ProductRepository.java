@@ -9,5 +9,5 @@ public interface ProductRepository {
     Optional<Product> findById(Long id);
     void deleteById(Long id);
 
-    void modifyProductReviewStats(Long productId, Long reviewCount, Float Score);
+    void modifyProductReviewStats(Long reviewCount, Float score, Long productId);
 }

@@ -27,7 +27,8 @@ public class ProductRepositoryImpl implements ProductRepository {
     }
 
     @Override
-    public void modifyProductReviewStats(Long productId, Long reviewCount, Float score) {
+    public void modifyProductReviewStats(Long reviewCount, Float score, Long productId) {
         jpaRepository.updateProductScore(reviewCount, score, productId);
     }
+
 }

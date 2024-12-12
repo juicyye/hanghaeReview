@@ -1,5 +1,6 @@
 package hanghae.review.shop.product.domain;
 
+import jakarta.persistence.Version;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -13,6 +14,7 @@ public class Product {
     private Long id;
     private Long reviewCount;
     private Float score;
+
 
     public void updateReviewData(Long reviewCount, Float totalScore) {
         this.reviewCount = reviewCount;

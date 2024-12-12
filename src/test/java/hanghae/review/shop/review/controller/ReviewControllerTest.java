@@ -51,7 +51,7 @@ class ReviewControllerTest extends IntegrationTestSupport {
     void registerReview() throws Exception {
         // given
         Long productId = 1L;
-        ReviewCreateReqDto request = new ReviewCreateReqDto(1L, 2.2f, "내용");
+        ReviewCreateReqDto request = new ReviewCreateReqDto(3L, 2.2f, "내용");
 
         // when
         ResultActions resultActions = mockMvc.perform(post("/products/{productId}/reviews", productId)

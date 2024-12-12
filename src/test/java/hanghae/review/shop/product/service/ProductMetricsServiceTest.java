@@ -17,6 +17,7 @@ class ProductMetricsServiceTest {
     private ProductMetricsService productMetricsService;
     private FakeProductRepository productRepository;
     private FakeReviewRepository reviewRepository;
+    Product product = createProduct(2.2f, 3L);
 
     @BeforeEach
     void setUp() {
@@ -24,7 +25,6 @@ class ProductMetricsServiceTest {
         reviewRepository = new FakeReviewRepository();
         productMetricsService = new ProductMetricsService(productRepository, reviewRepository);
 
-        Product product = createProduct(2.2f, 3L);
         productRepository.save(product);
         reviewRepository.save(createReview(product, 3.5f, 1L));
         reviewRepository.save(createReview(product, 3.2f, 1L));

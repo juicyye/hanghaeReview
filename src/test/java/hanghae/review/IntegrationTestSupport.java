@@ -7,8 +7,8 @@ import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.context.jdbc.Sql.ExecutionPhase;
 
 
-@SpringBootTest(properties = "spring.profiles.active=dev")
-@ActiveProfiles("dev")
+@SpringBootTest
+@ActiveProfiles("test")
 @AutoConfigureMockMvc
 @Sql(value = "/delete-all-data.sql", executionPhase = ExecutionPhase.AFTER_TEST_METHOD)
 public abstract class IntegrationTestSupport {

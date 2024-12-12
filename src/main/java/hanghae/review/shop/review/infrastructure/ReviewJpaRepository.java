@@ -7,6 +7,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 public interface ReviewJpaRepository extends JpaRepository<ReviewEntity, Long> {
+
     @Query("select re from ReviewEntity re join fetch re.productEntity pe where pe.id = :productId")
     List<ReviewEntity> findAllByProductId(@Param("productId") Long productId);
 
