@@ -16,10 +16,10 @@ public class ProductReviewRespDto {
     private Long totalCount;
     private Float score;
     private int cursor;
-    private List<ReviewRespDto> reviewRespDtos = new ArrayList<>();
+    private List<ReviewRespDto> reviews = new ArrayList<>();
 
     public void setReviewInfo(int cursor, List<ReviewRespDto> reviewRespDtos) {
         this.cursor = cursor;
-        this.reviewRespDtos = reviewRespDtos;
+        this.reviews = reviewRespDtos;
     }
 }

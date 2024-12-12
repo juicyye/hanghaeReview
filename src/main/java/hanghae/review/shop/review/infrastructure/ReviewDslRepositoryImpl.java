@@ -31,13 +31,13 @@ public class ReviewDslRepositoryImpl {
     private List<ReviewRespDto> getProductReviews(Long productId, Pageable pageable) {
         return queryFactory.select(
                         Projections.fields(ReviewRespDto.class, reviewEntity.id, reviewEntity.content, reviewEntity.score,
-                                reviewEntity.content, reviewEntity.createdAt))
+                                reviewEntity.userId, reviewEntity.content, reviewEntity.createdAt))
                 .from(reviewEntity)
                 .join(reviewEntity.productEntity, productEntity)
                 .where(productEntity.id.eq(productId))
                 .offset(pageable.getOffset())
                 .limit(pageable.getPageSize())
-                .orderBy(reviewEntity.createdAt.asc())
+                .orderBy(reviewEntity.createdAt.desc())
                 .fetch();
     }
 
@@ -45,17 +45,17 @@ public class ReviewDslRepositoryImpl {
         for (ReviewRespDto reviewDto : reviewDtos) {
             String imageUrl = queryFactory.select(imageFileEntity.originalFileName)
                     .from(imageFileEntity)
-                    .where(imageFileEntity.reviewEntity.id.eq(reviewDto.id()))
+                    .where(imageFileEntity.reviewEntity.id.eq(reviewDto.getId()))
                     .fetchOne();
-            ReviewRespDto.addImage(reviewDto, imageUrl);
+            reviewDto.addImageUrl(imageUrl);
         }
     }
 
     private ProductReviewRespDto getReviews(Long productId) {
         return queryFactory.select(
-                        Projections.fields(ProductReviewRespDto.class, reviewEntity.count().as("totalCount"),
-                                reviewEntity.score))
-                .from(reviewEntity)
+                        Projections.fields(ProductReviewRespDto.class, productEntity.reviewCount.as("totalCount"),
+                                productEntity.score))
+                .from(productEntity)
                 .where(productEntity.id.eq(productId))
                 .fetchOne();
     }

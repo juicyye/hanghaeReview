@@ -9,12 +9,12 @@ import org.springframework.stereotype.Component;
 
 @Component
 @RequiredArgsConstructor
+@Profile("prod")
 public class Init {
 
     private final ProductService productService;
 
     @PostConstruct
-    @Profile("prod")
     public void init() {
         for (int i = 0; i < 10; i++) {
             productService.create(createProduct());

@@ -23,7 +23,7 @@ public class ImageFileService {
 
     @Transactional
     public void registerFile(MultipartFile file, String directory, Review review) {
-        if(file.isEmpty()) return;
+        if(file == null) return;
         String originalFilename = file.getOriginalFilename();
         String storeFileName = generateStoreFileName(originalFilename);
 
