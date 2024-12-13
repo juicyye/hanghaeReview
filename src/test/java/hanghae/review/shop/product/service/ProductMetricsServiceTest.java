@@ -4,7 +4,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
 import hanghae.review.mock.FakeProductRepository;
-import hanghae.review.mock.FakeReviewRepository;
 import hanghae.review.shop.product.domain.Product;
 import hanghae.review.shop.review.domain.Review;
 import java.time.LocalDateTime;
@@ -16,18 +15,15 @@ class ProductMetricsServiceTest {
 
     private ProductMetricsService productMetricsService;
     private FakeProductRepository productRepository;
-    private FakeReviewRepository reviewRepository;
+
     Product product = createProduct(2.2f, 3L);
 
     @BeforeEach
     void setUp() {
         productRepository = new FakeProductRepository();
-        reviewRepository = new FakeReviewRepository();
-        productMetricsService = new ProductMetricsService(productRepository, reviewRepository);
+        productMetricsService = new ProductMetricsService(productRepository);
 
         productRepository.save(product);
-        reviewRepository.save(createReview(product, 3.5f, 1L));
-        reviewRepository.save(createReview(product, 3.2f, 1L));
     }
 
     @Test
@@ -35,22 +31,23 @@ class ProductMetricsServiceTest {
     void updateReviewMetrics() throws Exception {
         // given
         Long productId = 1L;
+        Float score = 2.2f;
 
         // when
-        productMetricsService.updateReviewMetrics(productId);
+        productMetricsService.updateReviewMetrics(productId,score);
         Product result = productRepository.findById(productId).get();
 
         // then
         assertAll(() -> {
-            assertThat(result.getScore()).isEqualTo((3.2f + 3.5f) / 2);
-            assertThat(result.getReviewCount()).isEqualTo(2);
+            assertThat(result.getTotalScore()).isEqualTo(2.2f + 2.2f);
+            assertThat(result.getReviewCount()).isEqualTo(4);
         });
     }
 
     private Product createProduct(float score, long reviewCount) {
         return Product.builder()
                 .id(1L)
-                .score(score)
+                .totalScore(score)
                 .reviewCount(reviewCount)
                 .build();
     }

@@ -30,7 +30,7 @@ class ProductEntityTest {
     private Product createProduct(float score, long count){
         return Product.builder()
                 .reviewCount(count)
-                .score(score)
+                .totalScore(score)
                 .build();
     }
 

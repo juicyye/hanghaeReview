@@ -99,7 +99,7 @@ class ReviewServiceTest {
 
     private Product createProduct(float score, long reviewCount) {
         return Product.builder()
-                .score(score)
+                .totalScore(score)
                 .reviewCount(reviewCount)
                 .build();
     }

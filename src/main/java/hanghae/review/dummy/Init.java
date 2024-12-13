@@ -23,7 +23,7 @@ public class Init {
 
     private Product createProduct(){
         return Product.builder()
-                .score(0.0f)
+                .totalScore(0.0f)
                 .reviewCount(0L)
                 .build();
     }

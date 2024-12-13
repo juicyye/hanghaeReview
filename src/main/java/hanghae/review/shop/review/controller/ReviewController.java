@@ -1,9 +1,13 @@
 package hanghae.review.shop.review.controller;
 
+import hanghae.review.shop.product.domain.Product;
+import hanghae.review.shop.product.service.ProductService;
 import hanghae.review.shop.review.controller.req.ReviewCreateReqDto;
 import hanghae.review.shop.review.controller.resp.ProductReviewRespDto;
+import hanghae.review.shop.review.controller.resp.ReviewRespDto;
 import hanghae.review.shop.review.service.ReviewService;
 import jakarta.validation.Valid;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -23,6 +27,7 @@ import org.springframework.web.multipart.MultipartFile;
 public class ReviewController {
 
     private final ReviewService reviewService;
+    private final ProductService productService;
 
     @PostMapping("/{productId}/reviews")
     public ResponseEntity<?> registerReview(@PathVariable("productId") Long productId,
@@ -35,8 +40,10 @@ public class ReviewController {
     @GetMapping("/{productId}/reviews")
     public ResponseEntity<?> getProductReviews(@PathVariable("productId") Long productId, @RequestParam(defaultValue = "0") Long cursor,
                                                @RequestParam(defaultValue = "10") int size) {
-        ProductReviewRespDto response = reviewService.fetchProductReviews(productId, cursor, size);
-        return new ResponseEntity<>(response, HttpStatus.OK);
+        Product product = productService.fetchProduct(productId);
+        List<ReviewRespDto> reviewRespDtos = reviewService.fetchProductReviews(productId, cursor, size);
+
+        return new ResponseEntity<>(ProductReviewRespDto.of(product,reviewRespDtos, cursor), HttpStatus.OK);
     }
 }
 

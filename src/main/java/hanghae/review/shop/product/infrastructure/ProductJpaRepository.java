@@ -1,14 +1,20 @@
 package hanghae.review.shop.product.infrastructure;
 
+import jakarta.persistence.LockModeType;
+import java.util.Optional;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.Modifying;
+import org.springframework.data.jpa.repository.Lock;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 public interface ProductJpaRepository extends JpaRepository<ProductEntity, Long> {
 
-    @Modifying
-    @Query("update ProductEntity pe set pe.reviewCount = :reviewCount, pe.score = :score where pe.id = :id")
-    void updateProductScore(@Param("reviewCount") Long reviewCount, @Param("score") Float score, @Param("id") Long id);
+    @Lock(LockModeType.OPTIMISTIC)
+    @Query("select pe from ProductEntity pe where pe.id = :id")
+    Optional<ProductEntity> fetchProductByIdOptimistic(@Param("id") Long id);
+
+    @Lock(LockModeType.PESSIMISTIC_WRITE)
+    @Query("select pe from ProductEntity pe where pe.id = :id")
+    Optional<ProductEntity> fetchProductByIdPessimistic(@Param("id") Long id);
 
 }

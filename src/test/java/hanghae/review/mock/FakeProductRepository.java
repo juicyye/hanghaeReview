@@ -2,8 +2,6 @@ package hanghae.review.mock;
 
 import hanghae.review.shop.product.domain.Product;
 import hanghae.review.shop.product.service.port.ProductRepository;
-import hanghae.review.shop.review.domain.Review;
-import hanghae.review.shop.review.service.port.ReviewRepository;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -16,14 +14,14 @@ public class FakeProductRepository implements ProductRepository {
 
     @Override
     public void save(Product product) {
-        if(product.getId() == null || product.getId() == 0) {
+        if (product.getId() == null || product.getId() == 0) {
             Product newProduct = Product.builder()
                     .id(counter.getAndIncrement())
                     .reviewCount(product.getReviewCount())
-                    .score(product.getScore())
+                    .totalScore(product.getTotalScore())
                     .build();
             data.add(newProduct);
-        } else{
+        } else {
             data.removeIf(item -> Objects.equals(item.getId(), product.getId()));
             data.add(product);
         }
@@ -42,6 +40,12 @@ public class FakeProductRepository implements ProductRepository {
     }
 
     @Override
-    public void modifyProductReviewStats(Long reviewCount, Float score, Long productId) {
+    public Optional<Product> findProductOptimistic(Long id) {
+        return Optional.empty();
+    }
+
+    @Override
+    public Optional<Product> findProductPessimistic(Long id) {
+        return Optional.empty();
     }
 }

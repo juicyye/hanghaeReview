@@ -18,13 +18,11 @@ public class ReviewDslRepositoryImpl {
 
     private final JPAQueryFactory queryFactory;
 
-    public ProductReviewRespDto findAllProductReviews(Long productId, Long cursor, int size) {
+    public List<ReviewRespDto> findAllProductReviews(Long productId, Long cursor, int size) {
         List<ReviewRespDto> reviewRespDtos = getProductReviews(productId, cursor, size);
         setReviewImage(reviewRespDtos);
 
-        ProductReviewRespDto reviewDto = getReviews(productId);
-        reviewDto.setReviewInfo(cursor, reviewRespDtos);
-        return reviewDto;
+        return reviewRespDtos;
     }
 
     private List<ReviewRespDto> getProductReviews(Long productId, Long cursor, int size) {
@@ -48,14 +46,5 @@ public class ReviewDslRepositoryImpl {
                     .fetchOne();
             reviewDto.addImageUrl(imageUrl);
         }
-    }
-
-    private ProductReviewRespDto getReviews(Long productId) {
-        return queryFactory.select(
-                        Projections.fields(ProductReviewRespDto.class, productEntity.reviewCount.as("totalCount"),
-                                productEntity.score))
-                .from(productEntity)
-                .where(productEntity.id.eq(productId))
-                .fetchOne();
     }
 }

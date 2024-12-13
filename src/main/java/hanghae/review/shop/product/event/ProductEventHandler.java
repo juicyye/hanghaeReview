@@ -1,11 +1,12 @@
 package hanghae.review.shop.product.event;
 
-import hanghae.review.shop.product.service.OptimisticFacade;
-import hanghae.review.shop.product.service.PessimisticService;
 import hanghae.review.shop.product.service.ProductMetricsService;
+import hanghae.review.shop.product.service.lock.OptimisticFacade;
+import hanghae.review.shop.product.service.lock.PessimisticService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.transaction.event.TransactionalEventListener;
 
 @Component
@@ -18,10 +19,10 @@ public class ProductEventHandler {
 
 
     @TransactionalEventListener
-    @Async("customTaskExecutor")
+    @Transactional(propagation = Propagation.REQUIRES_NEW)
     public void updateScore(ProductIncreaseEvent event) throws InterruptedException {
-        productMetricsService.updateReviewMetrics(event.productId());
-//        pessimisticService.updatePessimistic(event.productId());
-//        optimisticFacade.updateOptimistic(event.productId());
+//        productMetricsService.updateReviewMetrics(event.productId(),event.score());
+        pessimisticService.updatePessimistic(event.productId(), event.score());
+//        optimisticFacade.executeOptimistic(event.productId(),event.score());
     }
 }

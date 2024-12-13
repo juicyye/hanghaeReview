@@ -12,10 +12,12 @@ public class ProductRepositoryImpl implements ProductRepository {
 
     private final ProductJpaRepository jpaRepository;
 
+    @Override
     public void save(Product product) {
         jpaRepository.save(ProductEntity.fromModel(product));
     }
 
+    @Override
     public Optional<Product> findById(Long id) {
         return jpaRepository.findById(id)
                 .map(ProductEntity::toModel);
@@ -27,8 +29,14 @@ public class ProductRepositoryImpl implements ProductRepository {
     }
 
     @Override
-    public void modifyProductReviewStats(Long reviewCount, Float score, Long productId) {
-        jpaRepository.updateProductScore(reviewCount, score, productId);
+    public Optional<Product> findProductOptimistic(Long id) {
+        return jpaRepository.fetchProductByIdOptimistic(id)
+                .map(ProductEntity::toModel);
     }
 
+    @Override
+    public Optional<Product> findProductPessimistic(Long id) {
+        return jpaRepository.fetchProductByIdPessimistic(id)
+                .map(ProductEntity::toModel);
+    }
 }

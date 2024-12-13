@@ -5,12 +5,12 @@ import hanghae.review.global.util.ErrorMessage;
 import hanghae.review.shop.imagefile.event.ReviewImageFileEvent;
 import hanghae.review.shop.product.event.ProductIncreaseEvent;
 import hanghae.review.shop.review.controller.req.ReviewCreateReqDto;
-import hanghae.review.shop.review.controller.resp.ProductReviewRespDto;
+import hanghae.review.shop.review.controller.resp.ReviewRespDto;
 import hanghae.review.shop.review.domain.Review;
 import hanghae.review.shop.review.service.port.ReviewRepository;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.ApplicationEventPublisher;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
@@ -41,7 +41,7 @@ public class ReviewService {
         }
     }
 
-    public ProductReviewRespDto fetchProductReviews(Long productId, Long cursor, int size) {
-        return  reviewRepository.findProductReview(productId, cursor, size);
+    public List<ReviewRespDto> fetchProductReviews(Long productId, Long cursor, int size) {
+        return reviewRepository.findProductReview(productId, cursor, size);
     }
 }

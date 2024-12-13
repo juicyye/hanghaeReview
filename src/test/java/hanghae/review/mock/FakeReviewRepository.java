@@ -1,6 +1,6 @@
 package hanghae.review.mock;
 
-import hanghae.review.shop.review.controller.resp.ProductReviewRespDto;
+import hanghae.review.shop.review.controller.resp.ReviewRespDto;
 import hanghae.review.shop.review.domain.Review;
 import hanghae.review.shop.review.service.port.ReviewRepository;
 import java.util.ArrayList;
@@ -33,13 +33,6 @@ public class FakeReviewRepository implements ReviewRepository {
     }
 
     @Override
-    public List<Review> findAllByProduct(Long productId) {
-        return data.stream()
-                .filter(i -> i.getProduct().getId().equals(productId))
-                .toList();
-    }
-
-    @Override
     public boolean isReviewAlreadyWritten(Long userId, Long productId) {
         return data.stream()
                 .filter(i -> i.getProduct().getId().equals(productId))
@@ -54,17 +47,7 @@ public class FakeReviewRepository implements ReviewRepository {
     }
 
     @Override
-    public ProductReviewRespDto findProductReview(Long productId, Long cursor, int size) {
+    public List<ReviewRespDto> findProductReview(Long productId, Long cursor, int size) {
         return null;
-    }
-
-    @Override
-    public List<Review> findAllByPessimistic(Long productId) {
-        return List.of();
-    }
-
-    @Override
-    public List<Review> findAllByOptimistic(Long productId) {
-        return List.of();
     }
 }

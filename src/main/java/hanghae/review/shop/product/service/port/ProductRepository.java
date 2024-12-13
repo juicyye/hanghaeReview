@@ -8,6 +8,6 @@ public interface ProductRepository {
     void save(Product product);
     Optional<Product> findById(Long id);
     void deleteById(Long id);
-
-    void modifyProductReviewStats(Long reviewCount, Float score, Long productId);
+    Optional<Product> findProductOptimistic(Long id);
+    Optional<Product> findProductPessimistic(Long id);
 }

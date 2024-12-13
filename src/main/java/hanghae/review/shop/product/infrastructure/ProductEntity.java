@@ -1,16 +1,12 @@
 package hanghae.review.shop.product.infrastructure;
 
 import hanghae.review.shop.product.domain.Product;
-import hanghae.review.shop.review.infrastructure.ReviewEntity;
-import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
 import jakarta.persistence.Version;
-import java.util.List;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -35,7 +31,7 @@ public class ProductEntity {
         ProductEntity productEntity = new ProductEntity();
         productEntity.id = product.getId();
         productEntity.reviewCount = product.getReviewCount();
-        productEntity.score = product.getScore();
+        productEntity.score = product.getTotalScore();
         return productEntity;
     }
 
@@ -43,7 +39,7 @@ public class ProductEntity {
         return Product.builder()
                 .id(id)
                 .reviewCount(reviewCount)
-                .score(score)
+                .totalScore(score)
                 .build();
     }
 

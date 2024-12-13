@@ -151,7 +151,7 @@ class ReviewControllerTest extends IntegrationTestSupport {
         // then
         resultActions.andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect(MockMvcResultMatchers.jsonPath("$.totalCount").value(2))
-                .andExpect(MockMvcResultMatchers.jsonPath("$.score").value(2.2))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.score").value(Math.round(2.2f/2)))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.reviews[0].userId").value(2))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.reviews[1].userId").value(1));
     }
