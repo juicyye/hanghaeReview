@@ -18,6 +18,9 @@ public class ReviewDslRepositoryImpl {
 
     private final JPAQueryFactory queryFactory;
 
+    /**
+     * 상품에 대한 리뷰와 이미지 파일을 DB로부터 읽어온다
+     */
     public List<ReviewRespDto> findAllProductReviews(Long productId, Long cursor, int size) {
         List<ReviewRespDto> reviewRespDtos = getProductReviews(productId, cursor, size);
         setReviewImage(reviewRespDtos);

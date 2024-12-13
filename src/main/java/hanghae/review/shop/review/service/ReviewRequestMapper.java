@@ -15,6 +15,9 @@ public class ReviewRequestMapper {
     private final ProductService productService;
     private final TimeRandomHolder timeRandomHolder;
 
+    /**
+     * 도메인 생성 전용 클래스
+     */
     public Review create(Long productId, ReviewCreateReqDto createReqDto) {
         Product product = productService.fetchProduct(productId);
         return Review.builder()

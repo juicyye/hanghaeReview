@@ -24,6 +24,10 @@ public class ReviewService {
     private final ReviewRequestMapper reviewRequestMapper;
     private final ApplicationEventPublisher eventPublisher;
 
+    /**
+     * 리뷰 생성
+     * 리뷰를 생성하면 이미지파일과 상품 리뷰증가 이벤트가 발행된다
+     */
     @Transactional
     public void create(Long productId, ReviewCreateReqDto createReqDto, MultipartFile file) {
         isReviewWritten(createReqDto.userId(), productId);
@@ -34,6 +38,9 @@ public class ReviewService {
         eventPublisher.publishEvent(new ReviewImageFileEvent(file, review));
     }
 
+    /**
+     * 유저가 하나의 상품에 이미 리뷰를 작성했는지 확인
+     */
     private void isReviewWritten(Long userId, Long productId) {
         boolean result = reviewRepository.isReviewAlreadyWritten(userId, productId);
         if (result) {
@@ -41,6 +48,10 @@ public class ReviewService {
         }
     }
 
+    /**
+     * 상품에 대한 리뷰를 커서 페이지네이션으로 가져온다
+     * 상품에 대한 리뷰와 리뷰에 대한 이미지파일을 불어오는 역할을 한다
+     */
     public List<ReviewRespDto> fetchProductReviews(Long productId, Long cursor, int size) {
         return reviewRepository.findProductReview(productId, cursor, size);
     }

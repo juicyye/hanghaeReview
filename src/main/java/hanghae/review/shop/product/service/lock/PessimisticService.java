@@ -17,7 +17,6 @@ public class PessimisticService {
      * 비관적 락
      */
 
-
     public void updatePessimistic(Long productId, Float score) {
         Product product = getProduct(productId);
         product.updateReviewData(score);

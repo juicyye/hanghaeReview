@@ -19,6 +19,9 @@ public class Product {
         this.totalScore += score;
     }
 
+    /**
+     * 총 점수와 리뷰 수를 통해 평균 점수를 반환한다
+     */
     public int calculateAverageScore() {
         return Math.round(totalScore / reviewCount);
     }
