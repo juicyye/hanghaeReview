@@ -16,7 +16,7 @@ class ProductMetricsServiceTest {
     private ProductMetricsService productMetricsService;
     private FakeProductRepository productRepository;
 
-    Product product = createProduct(2.2f, 3L);
+    Product product = createProduct(2, 3L);
 
     @BeforeEach
     void setUp() {
@@ -31,7 +31,7 @@ class ProductMetricsServiceTest {
     void updateReviewMetrics() throws Exception {
         // given
         Long productId = 1L;
-        Float score = 2.2f;
+        Integer score = 2;
 
         // when
         productMetricsService.updateReviewMetrics(productId,score);
@@ -39,7 +39,7 @@ class ProductMetricsServiceTest {
 
         // then
         assertAll(() -> {
-            assertThat(result.getTotalScore()).isEqualTo(2.2f + 2.2f);
+            assertThat(result.getTotalScore()).isEqualTo(4);
             assertThat(result.getReviewCount()).isEqualTo(4);
         });
     }

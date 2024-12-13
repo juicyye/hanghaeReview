@@ -15,11 +15,15 @@ public class ImageFileRepositoryImpl implements ImageFileRepository {
     @Override
     public void save(ImageFile imageFile) {
         ImageFileEntity savedImageFile = jpaRepository.save(ImageFileEntity.fromEntity(imageFile));
-
     }
 
     @Override
     public Optional<ImageFile> findById(Long id) {
         return jpaRepository.findById(id).map(ImageFileEntity::toEntity);
+    }
+
+    @Override
+    public Optional<String> findByReviewId(Long reviewId) {
+        return jpaRepository.findByReviewId(reviewId);
     }
 }

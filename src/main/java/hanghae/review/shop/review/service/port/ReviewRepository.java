@@ -12,5 +12,5 @@ public interface ReviewRepository {
 
     Optional<Review> findById(Long id);
 
-    List<ReviewRespDto> findProductReview(Long productId, Long cursor, int size);
+    List<Review> findProductReview(Long productId, Long cursor, int size);
 }

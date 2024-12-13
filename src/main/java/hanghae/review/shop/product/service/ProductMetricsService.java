@@ -16,7 +16,7 @@ public class ProductMetricsService {
     /**
      * 메서드가 호출되면 해당 점수만큼 총 점수와 리뷰수가 오르게 된다
      */
-    public void updateReviewMetrics(Long productId, Float score) {
+    public void updateReviewMetrics(Long productId, Integer score) {
         Product product = getProduct(productId);
         product.updateReviewData(score);
         productRepository.save(product);

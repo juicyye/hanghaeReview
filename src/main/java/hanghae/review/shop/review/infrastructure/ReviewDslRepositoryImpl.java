@@ -4,6 +4,7 @@ import static hanghae.review.shop.imagefile.infrastructure.QImageFileEntity.imag
 import static hanghae.review.shop.product.infrastructure.QProductEntity.productEntity;
 import static hanghae.review.shop.review.infrastructure.QReviewEntity.reviewEntity;
 
+import com.querydsl.core.Tuple;
 import com.querydsl.core.types.Projections;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import hanghae.review.shop.review.controller.resp.ProductReviewRespDto;
@@ -19,19 +20,10 @@ public class ReviewDslRepositoryImpl {
     private final JPAQueryFactory queryFactory;
 
     /**
-     * 상품에 대한 리뷰와 이미지 파일을 DB로부터 읽어온다
+     * 상품에 대한 리뷰를 DB로부터 읽어온다
      */
-    public List<ReviewRespDto> findAllProductReviews(Long productId, Long cursor, int size) {
-        List<ReviewRespDto> reviewRespDtos = getProductReviews(productId, cursor, size);
-        setReviewImage(reviewRespDtos);
-
-        return reviewRespDtos;
-    }
-
-    private List<ReviewRespDto> getProductReviews(Long productId, Long cursor, int size) {
-        return queryFactory.select(
-                        Projections.fields(ReviewRespDto.class, reviewEntity.id, reviewEntity.content, reviewEntity.score,
-                                reviewEntity.userId, reviewEntity.content, reviewEntity.createdAt))
+    public List<ReviewEntity> findAllProductReviews(Long productId, Long cursor, int size) {
+        return queryFactory.select(reviewEntity)
                 .from(reviewEntity)
                 .join(reviewEntity.productEntity, productEntity)
                 .where(productEntity.id.eq(productId))
@@ -39,15 +31,5 @@ public class ReviewDslRepositoryImpl {
                 .limit(size)
                 .orderBy(reviewEntity.createdAt.desc())
                 .fetch();
-    }
-
-    private void setReviewImage(List<ReviewRespDto> reviewDtos) {
-        for (ReviewRespDto reviewDto : reviewDtos) {
-            String imageUrl = queryFactory.select(imageFileEntity.originalFileName)
-                    .from(imageFileEntity)
-                    .where(imageFileEntity.reviewEntity.id.eq(reviewDto.getId()))
-                    .fetchOne();
-            reviewDto.addImageUrl(imageUrl);
-        }
     }
 }

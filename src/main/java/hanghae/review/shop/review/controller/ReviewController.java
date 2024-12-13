@@ -1,10 +1,12 @@
 package hanghae.review.shop.review.controller;
 
+import hanghae.review.shop.imagefile.service.ImageFileService;
 import hanghae.review.shop.product.domain.Product;
 import hanghae.review.shop.product.service.ProductService;
 import hanghae.review.shop.review.controller.req.ReviewCreateReqDto;
 import hanghae.review.shop.review.controller.resp.ProductReviewRespDto;
 import hanghae.review.shop.review.controller.resp.ReviewRespDto;
+import hanghae.review.shop.review.domain.Review;
 import hanghae.review.shop.review.service.ReviewService;
 import jakarta.validation.Valid;
 import java.util.List;
@@ -41,9 +43,10 @@ public class ReviewController {
                                                @RequestParam(defaultValue = "0") Long cursor,
                                                @RequestParam(defaultValue = "10") int size) {
         Product product = productService.fetchProduct(productId);
-        List<ReviewRespDto> reviewRespDtos = reviewService.fetchProductReviews(productId, cursor, size);
+        List<Review> reviews = reviewService.fetchProductReviews(productId, cursor, size);
+        List<ReviewRespDto> reviewRespDtos = reviews.stream().map(ReviewRespDto::new).toList();
 
-        return new ResponseEntity<>(ProductReviewRespDto.of(product, reviewRespDtos, cursor), HttpStatus.OK);
+        return new ResponseEntity<>(ProductReviewRespDto.of(product,reviewRespDtos, cursor), HttpStatus.OK);
     }
 }
 

@@ -2,7 +2,7 @@ package hanghae.review.shop.review.controller.req;
 
 public record ReviewCreateReqDto(
         Long userId,
-        Float score,
+        Integer score,
         String content
 
 ) {

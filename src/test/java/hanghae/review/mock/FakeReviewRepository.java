@@ -49,7 +49,7 @@ public class FakeReviewRepository implements ReviewRepository {
     }
 
     @Override
-    public List<ReviewRespDto> findProductReview(Long productId, Long cursor, int size) {
+    public List<Review> findProductReview(Long productId, Long cursor, int size) {
         return null;
     }
 }

@@ -31,6 +31,11 @@ public class ImageFileService {
         imageFileRepository.save(imageFile);
     }
 
+    public String fetchImageFileByReview(Long reviewId) {
+        return imageFileRepository.findByReviewId(reviewId)
+                .orElse(null);
+    }
+
     private String generateStoreFileName(String originalFilename) {
         int pos = originalFilename.lastIndexOf(IMAGE_FILE_DELIMITER);
         String extension = originalFilename.substring(pos + 1);

@@ -7,4 +7,6 @@ public interface ImageFileRepository {
 
     void save(ImageFile imageFile);
     Optional<ImageFile> findById(Long id);
+
+    Optional<String> findByReviewId(Long reviewId);
 }

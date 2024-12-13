@@ -28,4 +28,9 @@ public class FakeImageFileRepository implements ImageFileRepository {
     public Optional<ImageFile> findById(Long id) {
         return data.stream().filter(i -> i.getId().equals(id)).findFirst();
     }
+
+    @Override
+    public Optional<String> findByReviewId(Long reviewId) {
+        return Optional.empty();
+    }
 }

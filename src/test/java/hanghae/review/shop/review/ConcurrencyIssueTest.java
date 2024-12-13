@@ -44,7 +44,7 @@ public class ConcurrencyIssueTest extends IntegrationTestSupport {
             es.submit(() -> {
                 try {
                     long l = Integer.valueOf(finalI).longValue();
-                    ReviewCreateReqDto request = new ReviewCreateReqDto(l, 2.2f, "내용");
+                    ReviewCreateReqDto request = new ReviewCreateReqDto(l, 2, "내용");
                     reviewService.create(1L, request, null);
                 } finally {
                     latch.countDown();

@@ -33,7 +33,8 @@ public class ReviewRepositoryImpl implements ReviewRepository {
     }
 
     @Override
-    public List<ReviewRespDto> findProductReview(Long productId, Long cursor, int size) {
-        return reviewDslRepository.findAllProductReviews(productId, cursor, size);
+    public List<Review> findProductReview(Long productId, Long cursor, int size) {
+        return reviewDslRepository.findAllProductReviews(productId, cursor, size)
+                .stream().map(ReviewEntity::toModel).toList();
     }
 }

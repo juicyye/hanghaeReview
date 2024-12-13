@@ -35,7 +35,7 @@ class ReviewRequestMapperTest extends IntegrationTestSupport {
     void createReview() throws Exception {
         // given
         Long userId = 1L;
-        float score = 4.0f;
+        int score = 4;
         String content = "좋아요";
         ReviewCreateReqDto request = new ReviewCreateReqDto(userId, score, content);
 

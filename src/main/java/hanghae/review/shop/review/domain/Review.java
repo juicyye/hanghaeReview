@@ -23,17 +23,19 @@ public class Review {
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
 
-    public Review(Long userId, String content, Product product, Float score, LocalDateTime currentDate) {
+    private String imageUrl;
+
+    public Review(Long userId, String content, Product product, Integer score, LocalDateTime currentDate) {
         validate(userId, score, content);
         this.userId = userId;
         this.content = content;
         this.product = product;
-        this.score = score;
+        this.score = (float) score;
         this.createdAt = currentDate;
         this.updatedAt = currentDate;
     }
 
-    private void validate(Long userId, Float score, String content) {
+    private void validate(Long userId, Integer score, String content) {
         validateUser(userId);
         validateScoreRange(score);
         validateContentSize(content);
@@ -45,7 +47,7 @@ public class Review {
         }
     }
 
-    private void validateScoreRange(Float score) {
+    private void validateScoreRange(Integer score) {
         if(score > 5 || score < 0) {
             throw new CustomApiException(ErrorMessage.INVALID_SCORE_RANGE.getMessage());
         }
@@ -55,5 +57,9 @@ public class Review {
         if (!Pattern.matches("^[ㄱ-ㅎ가-힣\\w\\s]{2,50}", content)) {
             throw new CustomApiException(ErrorMessage.INVALID_CONTENT_FORMAT.getMessage());
         }
+    }
+
+    public void setImageAddress(String imageUrl) {
+        this.imageUrl = imageUrl;
     }
 }

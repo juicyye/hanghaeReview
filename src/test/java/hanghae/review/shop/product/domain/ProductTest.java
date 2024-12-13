@@ -12,8 +12,8 @@ class ProductTest {
     @DisplayName("상품에는 총 리뷰수와 총 평점이 있다")
     void createProduct_Test() throws Exception {
         // given
-        Long reviewCount = 2L;
-        Float score = 35.2f;
+        long reviewCount = 2L;
+        int score = 5;
         Product product = createProduct(1L, reviewCount, score);
 
         // when
@@ -30,15 +30,15 @@ class ProductTest {
     @DisplayName("상품 총 리뷰수와 총 평점으로 평균 점수를 구할 수 있다")
     void canCalculateAverage() throws Exception {
         // given
-        Long reviewCount = 2L;
-        Float score = 35.2f;
+        long reviewCount = 2L;
+        int score = 5;
         Product product = createProduct(1L, reviewCount, score);
 
         // when
         int result = product.calculateAverageScore();
 
         // then
-        assertThat(result).isEqualTo(Math.round(score / 2));
+        assertThat(result).isEqualTo(Math.round((float) score / reviewCount));
     }
 
     private Product createProduct(long id, long reviewCount, float totalScore){

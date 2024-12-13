@@ -3,6 +3,7 @@ package hanghae.review.shop.review.service;
 import hanghae.review.global.exception.CustomApiException;
 import hanghae.review.global.util.ErrorMessage;
 import hanghae.review.shop.imagefile.event.ReviewImageFileEvent;
+import hanghae.review.shop.imagefile.service.port.ImageFileRepository;
 import hanghae.review.shop.product.event.ProductIncreaseEvent;
 import hanghae.review.shop.review.controller.req.ReviewCreateReqDto;
 import hanghae.review.shop.review.controller.resp.ReviewRespDto;
@@ -23,6 +24,7 @@ public class ReviewService {
     private final ReviewRepository reviewRepository;
     private final ReviewRequestMapper reviewRequestMapper;
     private final ApplicationEventPublisher eventPublisher;
+    private final ImageFileRepository imageFileRepository;
 
     /**
      * 리뷰 생성
@@ -52,7 +54,13 @@ public class ReviewService {
      * 상품에 대한 리뷰를 커서 페이지네이션으로 가져온다
      * 상품에 대한 리뷰와 리뷰에 대한 이미지파일을 불어오는 역할을 한다
      */
-    public List<ReviewRespDto> fetchProductReviews(Long productId, Long cursor, int size) {
-        return reviewRepository.findProductReview(productId, cursor, size);
+    public List<Review> fetchProductReviews(Long productId, Long cursor, int size) {
+
+        List<Review> reviews = reviewRepository.findProductReview(productId, cursor, size);
+        for (Review review : reviews) {
+            String imageFileUrl = imageFileRepository.findByReviewId(review.getId()).orElse(null);
+            review.setImageAddress(imageFileUrl);
+        }
+        return reviews;
     }
 }

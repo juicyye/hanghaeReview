@@ -14,7 +14,7 @@ public class Product {
     private Long reviewCount;
     private Float totalScore;
 
-    public void updateReviewData(Float score) {
+    public void updateReviewData(Integer score) {
         this.reviewCount += 1;
         this.totalScore += score;
     }
