@@ -32,10 +32,10 @@ public class ReviewService {
     public void create(Long productId, ReviewCreateReqDto createReqDto, MultipartFile file) {
         isReviewWritten(createReqDto.userId(), productId);
         Review review = reviewRequestMapper.create(productId, createReqDto);
-        reviewRepository.save(review);
+        Review savedReview = reviewRepository.save(review);
 
         eventPublisher.publishEvent(new ProductIncreaseEvent(productId, createReqDto.score()));
-        eventPublisher.publishEvent(new ReviewImageFileEvent(file, review));
+        eventPublisher.publishEvent(new ReviewImageFileEvent(file, savedReview));
     }
 
     /**

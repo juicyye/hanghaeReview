@@ -14,7 +14,7 @@ public class FakeReviewRepository implements ReviewRepository {
     private AtomicLong counter = new AtomicLong();
 
     @Override
-    public void save(Review review) {
+    public Review save(Review review) {
         if (review.getId() == null || review.getId() == 0) {
             Review newReview = Review.builder()
                     .id(counter.getAndIncrement())
@@ -26,9 +26,11 @@ public class FakeReviewRepository implements ReviewRepository {
                     .updatedAt(review.getUpdatedAt())
                     .build();
             data.add(newReview);
+            return newReview;
         } else {
             data.removeIf(item -> Objects.equals(item.getId(), review.getId()));
             data.add(review);
+            return review;
         }
     }
 

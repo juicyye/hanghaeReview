@@ -63,6 +63,7 @@ public class ReviewEntity {
                 .score(score)
                 .createdAt(createdAt)
                 .updatedAt(updatedAt)
+                .product(productEntity.toModel())
                 .build();
     }
 }

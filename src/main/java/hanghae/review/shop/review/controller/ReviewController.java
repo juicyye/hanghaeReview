@@ -14,7 +14,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RequestPart;
@@ -31,19 +30,20 @@ public class ReviewController {
 
     @PostMapping("/{productId}/reviews")
     public ResponseEntity<?> registerReview(@PathVariable("productId") Long productId,
-                                            @Valid @RequestBody ReviewCreateReqDto createReqDto,
+                                            @Valid @RequestPart("createReqDto") ReviewCreateReqDto createReqDto,
                                             @RequestPart(value = "file", required = false) MultipartFile file) {
         reviewService.create(productId, createReqDto, file);
         return ResponseEntity.ok().build();
     }
 
     @GetMapping("/{productId}/reviews")
-    public ResponseEntity<?> getProductReviews(@PathVariable("productId") Long productId, @RequestParam(defaultValue = "0") Long cursor,
+    public ResponseEntity<?> getProductReviews(@PathVariable("productId") Long productId,
+                                               @RequestParam(defaultValue = "0") Long cursor,
                                                @RequestParam(defaultValue = "10") int size) {
         Product product = productService.fetchProduct(productId);
         List<ReviewRespDto> reviewRespDtos = reviewService.fetchProductReviews(productId, cursor, size);
 
-        return new ResponseEntity<>(ProductReviewRespDto.of(product,reviewRespDtos, cursor), HttpStatus.OK);
+        return new ResponseEntity<>(ProductReviewRespDto.of(product, reviewRespDtos, cursor), HttpStatus.OK);
     }
 }
 

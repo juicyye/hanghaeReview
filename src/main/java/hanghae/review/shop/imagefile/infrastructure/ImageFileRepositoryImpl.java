@@ -14,7 +14,8 @@ public class ImageFileRepositoryImpl implements ImageFileRepository {
 
     @Override
     public void save(ImageFile imageFile) {
-        jpaRepository.save(ImageFileEntity.fromEntity(imageFile));
+        ImageFileEntity savedImageFile = jpaRepository.save(ImageFileEntity.fromEntity(imageFile));
+
     }
 
     @Override

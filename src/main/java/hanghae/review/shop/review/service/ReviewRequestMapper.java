@@ -18,15 +18,8 @@ public class ReviewRequestMapper {
     /**
      * 도메인 생성 전용 클래스
      */
-    public Review create(Long productId, ReviewCreateReqDto createReqDto) {
+    public Review create(Long productId, ReviewCreateReqDto reqDto) {
         Product product = productService.fetchProduct(productId);
-        return Review.builder()
-                .content(createReqDto.content())
-                .userId(createReqDto.userId())
-                .score(createReqDto.score())
-                .product(product)
-                .createdAt(timeRandomHolder.getCurrentTime())
-                .updatedAt(timeRandomHolder.getCurrentTime())
-                .build();
+        return new Review(reqDto.userId(), reqDto.content(), product, reqDto.score(), timeRandomHolder.getCurrentTime());
     }
 }

@@ -1,6 +1,5 @@
 package hanghae.review.shop.review.infrastructure;
 
-import hanghae.review.shop.review.controller.resp.ProductReviewRespDto;
 import hanghae.review.shop.review.controller.resp.ReviewRespDto;
 import hanghae.review.shop.review.domain.Review;
 import hanghae.review.shop.review.service.port.ReviewRepository;
@@ -17,8 +16,8 @@ public class ReviewRepositoryImpl implements ReviewRepository {
     private final ReviewDslRepositoryImpl reviewDslRepository;
 
     @Override
-    public void save(Review review) {
-        jpaRepository.save(ReviewEntity.fromModel(review));
+    public Review save(Review review) {
+        return jpaRepository.save(ReviewEntity.fromModel(review)).toModel();
     }
 
     @Override

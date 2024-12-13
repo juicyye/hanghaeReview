@@ -11,12 +11,14 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.OneToOne;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @Entity
 @NoArgsConstructor
 @Builder
 @AllArgsConstructor
+@Getter
 public class ImageFileEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

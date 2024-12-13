@@ -43,4 +43,3 @@ applica*.properties
 /conf/
 /log/
 
-*docker*
