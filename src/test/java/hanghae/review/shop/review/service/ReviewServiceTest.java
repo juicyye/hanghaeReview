@@ -10,7 +10,7 @@ import hanghae.review.mock.FakeImageFileRepository;
 import hanghae.review.mock.FakeProductRepository;
 import hanghae.review.mock.FakeReviewRepository;
 import hanghae.review.mock.FakeTimeRandomHolder;
-import hanghae.review.shop.imagefile.event.ReviewImageFileEvent;
+import hanghae.review.shop.imagefile.service.ImageFileService;
 import hanghae.review.shop.product.domain.Product;
 import hanghae.review.shop.product.event.ProductIncreaseEvent;
 import hanghae.review.shop.product.service.ProductService;
@@ -33,7 +33,7 @@ class ReviewServiceTest {
 
     @BeforeEach
     void setUp() {
-        FakeImageFileRepository imageFileRepository = new FakeImageFileRepository();
+        ImageFileService imageFileService = Mockito.mock(ImageFileService.class);
         FakeProductRepository productRepository = new FakeProductRepository();
         reviewRepository = new FakeReviewRepository();
         ProductService productService = new ProductService(productRepository);
@@ -41,7 +41,7 @@ class ReviewServiceTest {
         ReviewRequestMapper reviewRequestMapper = new ReviewRequestMapper(productService, timeRandomHolder);
 
         eventPublisher = Mockito.mock(ApplicationEventPublisher.class);
-        reviewService = new ReviewService(reviewRepository, reviewRequestMapper, eventPublisher,imageFileRepository);
+        reviewService = new ReviewService(reviewRepository, reviewRequestMapper, eventPublisher,imageFileService);
         Product product = createProduct(2, 2L);
         productRepository.save(product);
     }
@@ -63,13 +63,12 @@ class ReviewServiceTest {
             assertThat(review.getContent()).isEqualTo("하이요");
             assertThat(review.getCreatedAt()).isEqualTo(localDateTime);
             Mockito.verify(eventPublisher).publishEvent(Mockito.any(ProductIncreaseEvent.class));
-            Mockito.verify(eventPublisher).publishEvent(Mockito.any(ReviewImageFileEvent.class));
         });
     }
 
     @Nested
     @DisplayName("한 유저는 각 상품에 대해 하나의 리뷰만 작성할 수 있다")
-    class OneUserOneReview{
+    class OneUserOneReview {
         Long productId = 0L;
         Long userId = 0L;
 
