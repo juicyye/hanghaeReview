@@ -48,3 +48,11 @@
 - 이 블로그에는 첫번째 방법인 평균점수를 상품에 저장하는 로직으로 테스트한 것입니다.
 - 오늘아침에 바꾸게 되어서 테스트는 진행했으나 블로그에 작성하지는 못했습니다.
 - 👉 [동시성 문제 해결 과정 블로그](https://velog.io/@paramkim/%EB%8F%99%EC%8B%9C%EC%84%B1-%ED%95%B4%EA%B2%B0-%EA%B3%BC%EC%A0%95)
+
+## ERD
+<img width="800" alt="hangaeReview" src="https://github.com/user-attachments/assets/a700520b-d74b-4e8c-9b5e-6fca56dcea1f" />
+
+
+
+
+
